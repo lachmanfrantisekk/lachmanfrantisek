@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f8ff">
+  <title>Vaše zkušenost | František Lachman</title>
+
+  <style>
+    :root {
+      --bg: #f5f8ff;
+      --bg-soft: rgba(255,255,255,.72);
+      --card: rgba(255,255,255,.82);
+      --text: #111a2e;
+      --muted: #5c6b83;
+      --line: rgba(32, 52, 84, .10);
+      --blue: #2867e8;
+      --blue-2: #159fe8;
+      --blue-soft: #eaf1ff;
+      --green: #18b98a;
+      --shadow: 0 25px 70px rgba(37, 70, 120, .13);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 8% 12%, rgba(82, 151, 255, .22), transparent 30%),
+        radial-gradient(circle at 92% 68%, rgba(75, 211, 255, .18), transparent 31%),
+        radial-gradient(circle at 52% 90%, rgba(93, 126, 255, .12), transparent 30%),
+        linear-gradient(180deg, #eef5ff 0%, #f8fbff 52%, #f1f7ff 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,.75), transparent 38%);
+      z-index: -1;
+    }
+
+    .page {
+      width: min(900px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 70px;
+    }
+
+    /* Top bar – intentionally matches the clean glass style of the portfolio */
+    .topbar {
+      height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 22px;
+      border: 1px solid rgba(255,255,255,.8);
+      border-radius: 38px;
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow: 0 12px 40px rgba(45, 73, 117, .08);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      font-weight: 700;
+      letter-spacing: -.2px;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      background: linear-gradient(145deg, #4e8cff, #1761df);
+      box-shadow: 0 8px 18px rgba(40,103,232,.25);
+    }
+
+    .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: .2s ease;
+    }
+
+    .back-link:hover { color: var(--blue); }
+
+    .hero {
+      text-align: center;
+      padding: 74px 16px 38px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.76);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 8px 28px rgba(37,70,120,.06);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(24,185,138,.12);
+    }
+
+    h1 {
+      margin: 28px 0 14px;
+      font-size: clamp(42px, 7vw, 72px);
+      line-height: .98;
+      letter-spacing: -3.5px;
+      font-weight: 800;
+    }
+
+    h1 span {
+      background: linear-gradient(100deg, #2867e8, #159fe8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .review-card {
+      padding: clamp(22px, 5vw, 44px);
+      border: 1px solid rgba(255,255,255,.86);
+      border-radius: var(--radius);
+      background: var(--card);
+      backdrop-filter: blur(26px);
+      -webkit-backdrop-filter: blur(26px);
+      box-shadow: var(--shadow);
+    }
+
+    .section + .section {
+      margin-top: 34px;
+      padding-top: 34px;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-title {
+      margin: 0 0 7px;
+      font-size: 19px;
+      letter-spacing: -.4px;
+    }
+
+    .section-description {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    /* Stars */
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: clamp(5px, 2vw, 12px);
+      padding: 6px 0 4px;
+      flex-direction: row-reverse;
+    }
+
+    .stars input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .stars label {
+      cursor: pointer;
+      color: #cbd5e5;
+      font-size: clamp(42px, 9vw, 58px);
+      line-height: 1;
+      transition: transform .15s ease, color .15s ease;
+      user-select: none;
+    }
+
+    .stars label:hover,
+    .stars label:hover ~ label,
+    .stars input:checked ~ label {
+      color: #f5b82e;
+    }
+
+    .stars label:hover { transform: translateY(-3px) scale(1.04); }
+
+    .rating-label {
+      min-height: 24px;
+      margin-top: 12px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field { min-width: 0; }
+
+    .field.full { grid-column: 1 / -1; }
+
+    label.field-label {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      outline: none;
+      border-radius: 17px;
+      padding: 15px 16px;
+      color: var(--text);
+      background: rgba(247,250,255,.78);
+      font: inherit;
+      font-size: 15px;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    input:focus, textarea:focus {
+      border-color: rgba(40,103,232,.45);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(40,103,232,.08);
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 11px;
+    }
+
+    .choice {
+      position: relative;
+    }
+
+    .choice input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .choice label {
+      min-height: 74px;
+      padding: 14px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: rgba(247,250,255,.68);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .choice label:hover {
+      transform: translateY(-2px);
+      border-color: rgba(40,103,232,.25);
+    }
+
+    .choice input:checked + label {
+      color: var(--blue);
+      background: var(--blue-soft);
+      border-color: rgba(40,103,232,.35);
+      box-shadow: 0 8px 22px rgba(40,103,232,.08);
+    }
+
+    .mini-note {
+      margin-top: 8px;
+      color: #7a879b;
+      font-size: 12px;
+    }
+
+    .submit-row {
+      margin-top: 36px;
+      text-align: center;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .submit {
+      min-width: 230px;
+      padding: 16px 25px;
+      border-radius: 999px;
+      color: white;
+      font-weight: 750;
+      font-size: 15px;
+      background: linear-gradient(105deg, #2867e8, #159fe8);
+      box-shadow: 0 12px 28px rgba(40,103,232,.25);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(40,103,232,.30);
+    }
+
+    .submit:active { transform: translateY(0); }
+
+    .privacy {
+      max-width: 570px;
+      margin: 14px auto 0;
+      color: #7b8798;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .success {
+      display: none;
+      text-align: center;
+      padding: 28px 10px 10px;
+    }
+
+    .success-icon {
+      width: 66px;
+      height: 66px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 20px;
+      border-radius: 22px;
+      color: white;
+      font-size: 29px;
+      background: linear-gradient(145deg, #20c997, #159f82);
+      box-shadow: 0 13px 30px rgba(24,185,138,.22);
+    }
+
+    .success h2 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      letter-spacing: -1px;
+    }
+
+    .success p {
+      margin: 0 auto;
+      max-width: 500px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    footer {
+      padding: 28px 10px 0;
+      text-align: center;
+      color: #8290a5;
+      font-size: 12px;
+    }
+
+    @media (max-width: 650px) {
+      .page {
+        width: min(100% - 20px, 900px);
+        padding-top: 14px;
+      }
+
+      .topbar {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .brand-mark { width: 36px; height: 36px; border-radius: 11px; }
+      .brand { font-size: 14px; }
+      .back-link { font-size: 12px; }
+
+      .hero {
+        padding: 52px 8px 28px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .review-card {
+        border-radius: 24px;
+        padding: 24px 18px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full { grid-column: auto; }
+
+      .choice-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .choice label {
+        min-height: 58px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">F</div>
+        <span>František Lachman</span>
+      </div>
+      <a class="back-link" href="https://frantiseklachman.com/">← Zpět na web</a>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">
+        <span class="status-dot"></span>
+        Vaše zkušenost je pro mě důležitá
+      </div>
+
+      <h1>Jak se vám se mnou <span>spolupracovalo?</span></h1>
+
+      <p>
+        Zabere to jen pár minut. Upřímná zpětná vazba mi pomáhá
+        zlepšovat služby a zároveň ukazuje budoucím klientům,
+        jak spolupráce skutečně probíhá.
+      </p>
+    </section>
+
+    <section class="review-card">
+
+      <form id="reviewForm">
+
+        <!-- Hodnocení -->
+        <div class="section">
+          <h2 class="section-title">Celkové hodnocení</h2>
+          <p class="section-description">Jak byste ohodnotili svou zkušenost?</p>
+
+          <div class="stars" role="radiogroup" aria-label="Hodnocení hvězdičkami">
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5" title="5 z 5">★</label>
+
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4" title="4 z 5">★</label>
+
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3" title="3 z 5">★</label>
+
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2" title="2 z 5">★</label>
+
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1" title="1 z 5">★</label>
+          </div>
+
+          <div class="rating-label" id="ratingText">Vyberte počet hvězdiček</div>
+        </div>
+
+        <!-- Pro / proti -->
+        <div class="section">
+          <h2 class="section-title">Co bylo nejlepší?</h2>
+          <p class="section-description">Vyberte vše, co na spolupráci oceňujete.</p>
+
+          <div class="choice-grid">
+            <div class="choice">
+              <input type="checkbox" id="pro1" name="pros" value="Komunikace">
+              <label for="pro1">💬<br>Komunikace</label>
+            </div>
+            <div class="choice">
+              <input type="checkbox" id="pro2" name="pros" value="Rychlost">
+              <label for="pro2">⚡<br>Rychlost</label>
+            </div>
+            <div class="choice">
+              <input type="checkbox" id="pro3" name="pros" value="Kvalita">
+              <label for="pro3">✦<br>Kvalita</label>
+            </div>
+            <div class="choice">
+              <input type="checkbox" id="pro4" name="pros" value="Nápady">
+              <label for="pro4">✧<br>Nápady</label>
+            </div>
+            <div class="choice">
+              <input type="checkbox" id="pro5" name="pros" value="Přístup">
+              <label for="pro5">♡<br>Přístup</label>
+            </div>
+            <div class="choice">
+              <input type="checkbox" id="pro6" name="pros" value="Výsledek">
+              <label for="pro6">✓<br>Výsledek</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="section-title">Bylo něco, co vám chybělo?</h2>
+          <p class="section-description">Klidně napište i drobnost. Negativní zpětná vazba je stejně cenná jako pochvala.</p>
+
+          <div class="field">
+            <textarea id="cons" name="cons" placeholder="Např. co bych mohl příště udělat lépe..."></textarea>
+          </div>
+        </div>
+
+        <!-- Detail zkušenosti -->
+        <div class="section">
+          <h2 class="section-title">Ještě pár rychlých otázek</h2>
+          <p class="section-description">Pomozte mi pochopit, v čem byla spolupráce nejsilnější.</p>
+
+          <div class="grid">
+            <div class="field full">
+              <label class="field-label">Jak jste byl/a spokojen/a s komunikací?</label>
+              <div class="choice-grid">
+                <div class="choice">
+                  <input type="radio" id="com1" name="communication" value="Výborná">
+                  <label for="com1">Výborná</label>
+                </div>
+                <div class="choice">
+                  <input type="radio" id="com2" name="communication" value="Dobrá">
+                  <label for="com2">Dobrá</label>
+                </div>
+                <div class="choice">
+                  <input type="radio" id="com3" name="communication" value="Mohla být lepší">
+                  <label for="com3">Mohla být lepší</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="field full">
+              <label class="field-label">Doporučili byste mě dál?</label>
+              <div class="choice-grid">
+                <div class="choice">
+                  <input type="radio" id="rec1" name="recommend" value="Určitě ano">
+                  <label for="rec1">👍 Určitě ano</label>
+                </div>
+                <div class="choice">
+                  <input type="radio" id="rec2" name="recommend" value="Spíše ano">
+                  <label for="rec2">🙂 Spíše ano</label>
+                </div>
+                <div class="choice">
+                  <input type="radio" id="rec3" name="recommend" value="Nevím">
+                  <label for="rec3">🤔 Nevím</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="field full">
+              <label class="field-label" for="message">Vzkaz nebo cokoli dalšího</label>
+              <textarea id="message" name="message" placeholder="Co byste chtěli dodat? Co vás potěšilo, překvapilo nebo co bych měl vědět?"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kontakt -->
+        <div class="section">
+          <h2 class="section-title">O vás</h2>
+          <p class="section-description">Jméno je volitelné. Pokud chcete, můžete uvést také firmu nebo projekt.</p>
+
+          <div class="grid">
+            <div class="field">
+              <label class="field-label" for="name">Jméno / firma</label>
+              <input type="text" id="name" name="name" placeholder="Např. Pavla Nováková">
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="project">Projekt</label>
+              <input type="text" id="project" name="project" placeholder="Např. nový web">
+            </div>
+
+            <div class="field full">
+              <label class="field-label" for="email">E-mail <span style="font-weight:400;color:#8290a5">(volitelné)</span></label>
+              <input type="email" id="email" name="email" placeholder="vas@email.cz">
+              <div class="mini-note">E-mail nebude veřejně zobrazen.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-row">
+          <button class="submit" type="submit">Odeslat hodnocení&nbsp; →</button>
+          <p class="privacy">
+            Odesláním souhlasíte se zpracováním údajů za účelem vyhodnocení zpětné vazby.
+            Veřejné použití recenze by bylo pouze s vaším samostatným souhlasem.
+          </p>
+        </div>
+      </form>
+
+      <div class="success" id="success">
+        <div class="success-icon">✓</div>
+        <h2>Děkuji za váš čas.</h2>
+        <p>
+          Vaše zpětná vazba byla zaznamenána. Opravdu si jí vážím —
+          pomáhá mi dělat další projekty ještě lépe.
+        </p>
+      </div>
+
+    </section>
+
+    <footer>
+      made with ♥ by František Lachman · frantiseklachman.com
+    </footer>
+  </main>
+
+  <script>
+    // Text pod hvězdičkami
+    const ratingText = document.getElementById("ratingText");
+    const ratingMessages = {
+      1: "Velmi nespokojen/a",
+      2: "Spíše nespokojen/a",
+      3: "Neutrální zkušenost",
+      4: "Velmi spokojen/a",
+      5: "Naprostá spokojenost ✦"
+    };
+
+    document.querySelectorAll('input[name="rating"]').forEach(input => {
+      input.addEventListener("change", () => {
+        ratingText.textContent = ratingMessages[input.value];
+      });
+    });
+
+    // Základní lokální uložení – později lze snadno napojit na backend,
+    // Formspree, Google Sheets, Supabase nebo vlastní API.
+    document.getElementById("reviewForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const rating = document.querySelector('input[name="rating"]:checked');
+      if (!rating) {
+        ratingText.textContent = "Prosím, vyberte nejprve počet hvězdiček.";
+        ratingText.style.color = "#d14b4b";
+        document.querySelector(".stars").scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+
+      const pros = [...document.querySelectorAll('input[name="pros"]:checked')].map(x => x.value);
+
+      /*
+       * Ukládáme recenzi ve stejném tvaru jako ContactMessage,
+       * který používá AdminMessages:
+       * id, name, email, subject, company, budget, website,
+       * message, status, created_at
+       *
+       * STORAGE_KEY musí být stejný jako v lib/storage.ts.
+       * Pokud loadMessages() používá jiný klíč než "messages",
+       * změň pouze hodnotu níže.
+       */
+      const STORAGE_KEY = "messages";
+
+      function loadMessages() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return [];
+          const data = JSON.parse(raw);
+          return Array.isArray(data) ? data : [];
+        } catch (error) {
+          console.error("Nepodařilo se načíst zprávy:", error);
+          return [];
+        }
+      }
+
+      function saveMessages(messages) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+      }
+
+      const ratingValue = Number(rating.value);
+      const prosText = pros.length
+        ? "\n\nCO BYLO NEJLEPŠÍ:\n" + pros.map(p => "• " + p).join("\n")
+        : "";
+      const consText = document.getElementById("cons").value.trim();
+      const communication =
+        document.querySelector('input[name="communication"]:checked')?.value || "";
+      const recommend =
+        document.querySelector('input[name="recommend"]:checked')?.value || "";
+      const extraMessage = document.getElementById("message").value.trim();
+
+      const details = [
+        `HODNOCENÍ: ${ratingValue}/5 ⭐`,
+        prosText,
+        consText ? `\n\nCO ZLEPŠIT:\n${consText}` : "",
+        communication ? `\n\nKOMUNIKACE: ${communication}` : "",
+        recommend ? `\n\nDOPORUČENÍ: ${recommend}` : "",
+        extraMessage ? `\n\nVZKAZ:\n${extraMessage}` : ""
+      ].filter(Boolean).join("");
+
+      const review = {
+        id: (crypto.randomUUID ? crypto.randomUUID() :
+          `${Date.now()}-${Math.random().toString(36).slice(2)}`),
+        name: document.getElementById("name").value.trim() || "Anonymní klient",
+        email: document.getElementById("email").value.trim(),
+        subject: `⭐ Recenze – ${ratingValue}/5`,
+        company: document.getElementById("project").value.trim(),
+        budget: "",
+        website: "",
+        message: details,
+        status: "new",
+        created_at: new Date().toISOString()
+      };
+
+      const messages = loadMessages();
+      messages.push(review);
+      saveMessages(messages);
+
+      document.getElementById("reviewForm").style.display = "none";
+      document.getElementById("success").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>

@@ -685,7 +685,7 @@
 
       function loadMessages() {
         try {
-          const raw = localStorage.getItem(STORAGE_KEY);
+          const raw = localStorage.getItem(MESSAGES_KEY);
           if (!raw) return [];
           const data = JSON.parse(raw);
           return Array.isArray(data) ? data : [];
@@ -696,7 +696,7 @@
       }
 
       function saveMessages(messages) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+        localStorage.setItem(MESSAGES_KEY, JSON.stringify(messages));
       }
 
       const ratingValue = Number(rating.value);

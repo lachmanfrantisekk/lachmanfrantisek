@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /recenze
+Disallow: /admin
+
+Sitemap: https://frantiseklachman.com/sitemap.xml

@@ -388,6 +388,48 @@
       line-height: 1.65;
     }
 
+    .google-review {
+  max-width: 520px;
+  margin: 30px auto 0;
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(32,52,84,.08);
+}
+
+.google-review-title {
+  font-size: 17px;
+  font-weight: 750;
+  margin-bottom: 7px;
+}
+
+.google-review p {
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+.google-review-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: white;
+  color: #202124;
+  border: 1px solid rgba(32,52,84,.12);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 750;
+  box-shadow: 0 8px 22px rgba(37,70,120,.10);
+  transition: .2s ease;
+}
+
+.google-review-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(37,70,120,.16);
+}
+
     footer {
       padding: 28px 10px 0;
       text-align: center;
@@ -623,14 +665,36 @@
         </div>
       </form>
 
-      <div class="success" id="success">
-        <div class="success-icon">✓</div>
-        <h2>Děkuji za váš čas.</h2>
-        <p>
-          Vaše zpětná vazba byla zaznamenána. Opravdu si jí vážím —
-          pomáhá mi dělat další projekty ještě lépe.
-        </p>
-      </div>
+     <div class="success" id="success">
+  <div class="success-icon">✓</div>
+
+  <h2>Děkuji za váš čas.</h2>
+
+  <p>
+    Vaše zpětná vazba byla zaznamenána. Opravdu si jí vážím —
+    pomáhá mi dělat další projekty ještě lépe.
+  </p>
+
+  <div class="google-review">
+    <div class="google-review-title">
+      ⭐ Chcete mi udělat ještě větší radost?
+    </div>
+
+    <p>
+      Pokud jste byli se spoluprací spokojeni, můžete mi zanechat
+      krátkou recenzi také na Google. Zabere to jen chvilku.
+    </p>
+
+    <a
+      class="google-review-button"
+      href="https://g.page/r/CRDrV-EdHfT7EAE/review"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      ⭐ Napsat recenzi na Google
+    </a>
+  </div>
+</div>
 
     </section>
 

@@ -118,6 +118,190 @@
     crossorigin
     href="/assets/index-qNwrKH0D.css"
   />
+
+  <style>
+  /* =========================================
+     LIQUID GLASS BLOBS
+     ========================================= */
+
+  .ambient-blobs {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(55px);
+    opacity: .55;
+    animation: blobFloat 14s ease-in-out infinite alternate;
+  }
+
+  .blob-1 {
+    width: 430px;
+    height: 430px;
+    top: 3%;
+    left: -130px;
+    background: rgba(40, 103, 232, .34);
+  }
+
+  .blob-2 {
+    width: 380px;
+    height: 380px;
+    top: 22%;
+    right: -120px;
+    background: rgba(21, 159, 232, .30);
+    animation-delay: -4s;
+  }
+
+  .blob-3 {
+    width: 500px;
+    height: 500px;
+    top: 42%;
+    left: 15%;
+    background: rgba(74, 116, 255, .22);
+    animation-delay: -7s;
+  }
+
+  .blob-4 {
+    width: 390px;
+    height: 390px;
+    top: 65%;
+    right: 0;
+    background: rgba(21, 159, 232, .28);
+    animation-delay: -10s;
+  }
+
+  .blob-5 {
+    width: 450px;
+    height: 450px;
+    top: 88%;
+    left: -130px;
+    background: rgba(40, 103, 232, .28);
+    animation-delay: -2s;
+  }
+
+  /* =========================================
+     GLASS BUBBLES
+     ========================================= */
+
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.8);
+
+    background:
+      radial-gradient(
+        circle at 30% 25%,
+        rgba(255,255,255,.8),
+        rgba(120,190,255,.20) 40%,
+        rgba(40,103,232,.10) 70%,
+        transparent 75%
+      );
+
+    box-shadow:
+      inset 0 0 25px rgba(255,255,255,.45),
+      0 15px 45px rgba(40,103,232,.14);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    animation: bubbleFloat 10s ease-in-out infinite;
+  }
+
+  .bubble-1 {
+    width: 75px;
+    height: 75px;
+    top: 12%;
+    left: 13%;
+  }
+
+  .bubble-2 {
+    width: 42px;
+    height: 42px;
+    top: 28%;
+    right: 17%;
+    animation-delay: -2s;
+  }
+
+  .bubble-3 {
+    width: 105px;
+    height: 105px;
+    top: 43%;
+    left: 5%;
+    animation-delay: -5s;
+  }
+
+  .bubble-4 {
+    width: 58px;
+    height: 58px;
+    top: 55%;
+    right: 9%;
+    animation-delay: -7s;
+  }
+
+  .bubble-5 {
+    width: 34px;
+    height: 34px;
+    top: 67%;
+    left: 25%;
+    animation-delay: -3s;
+  }
+
+  .bubble-6 {
+    width: 85px;
+    height: 85px;
+    top: 78%;
+    right: 25%;
+    animation-delay: -6s;
+  }
+
+  .bubble-7 {
+    width: 50px;
+    height: 50px;
+    top: 91%;
+    left: 12%;
+    animation-delay: -9s;
+  }
+
+  /* =========================================
+     ANIMATIONS
+     ========================================= */
+
+  @keyframes blobFloat {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+      transform: translate3d(35px, -25px, 0) scale(1.08);
+    }
+
+    100% {
+      transform: translate3d(-25px, 35px, 0) scale(.96);
+    }
+  }
+
+  @keyframes bubbleFloat {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+      transform: translate3d(12px, -22px, 0);
+    }
+
+    100% {
+      transform: translate3d(-8px, 12px, 0);
+    }
+  }
+</style>
+  
 </head>
   <body>
     <div class="ambient-blobs" aria-hidden="true">
